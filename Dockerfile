@@ -14,12 +14,14 @@ RUN gem build transmission-rss.gemspec
 RUN gem install -N --build-root /build transmission-rss-*.gem
 
 FROM alpine:3.22
-ARG UID=1000
-ARG GID=1000
+ENV PUID=1000
+ENV PGID=1000
 RUN \
   addgroup -g $GID ruby && \
   adduser -u $UID -G ruby -D ruby && \
-  apk add --no-cache ruby
-USER ruby
+  apk add --no-cache ruby su-exec
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 COPY --from=builder /build /
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 CMD ["transmission-rss"]
