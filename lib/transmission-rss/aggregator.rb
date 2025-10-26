@@ -89,8 +89,8 @@ module TransmissionRSS
         options[:ssl_verify_mode] = OpenSSL::SSL::VERIFY_NONE
       end
 
-      # open for URIs is obsolete, URI.open does not work in 2.4
-      URI.send(:open, feed.url, options).read
+      # Use URI.open for Ruby 3.x compatibility
+      URI.open(feed.url, options).read
     end
 
     def parse(content)

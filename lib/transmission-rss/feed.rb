@@ -10,7 +10,7 @@ module TransmissionRSS
       when Hash
         @config = config
 
-        @url = URI.escape(URI.unescape(config['url'] || config.keys.first))
+        @url = config['url'] || config.keys.first
 
         @download_path = config['download_path']
 

@@ -65,7 +65,7 @@ describe Client do
       end
 
       VCR.use_cassette('add_torrent_via_http_with_special_chars', MATCH_REQUESTS_ON) do
-        response = Client.new.add_torrent(URI.escape(http_url), :url)
+        response = Client.new.add_torrent(URI.encode_www_form_component(http_url), :url)
         expect(response.result).to eq('success')
       end
     end

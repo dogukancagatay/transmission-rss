@@ -19,7 +19,7 @@ ARG GID=1000
 RUN \
   addgroup -g $GID ruby && \
   adduser -u $UID -G ruby -D ruby && \
-  apk add --no-cache ruby ruby-etc ruby-json
+  apk add --no-cache ruby
 USER ruby
 COPY --from=builder /build /
 CMD ["transmission-rss"]

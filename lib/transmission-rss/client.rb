@@ -1,6 +1,7 @@
 require 'net/http'
 require 'json'
 require 'base64'
+require 'timeout'
 
 require File.join(File.dirname(__FILE__), 'log')
 
@@ -57,7 +58,6 @@ module TransmissionRSS
 
       case type
         when :url
-          file = URI.escape(file) if URI.unescape(file) == file
           arguments.filename = file
         when :file
           arguments.metainfo = Base64.encode64(File.read(file))
